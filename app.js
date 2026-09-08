@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. Apuntar los archivos estáticos a la carpeta 'public'
+// Servir recursos estáticos desde la carpeta public
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/health', (req, res) => res.status(200).send('OK'));
@@ -38,13 +38,11 @@ app.get('/api/test-db', async (req, res) => {
 app.use('/api/tasas', tasasRoutes);
 app.use('/api/socios', sociosRoutes);
 app.use('/api/directorio', directorioRoutes);
-
-// Reutilización del controlador para comprobantes, cola y reportes
 app.use('/api/comprobantes', comprobantesRoutes);
 app.use('/api/cola', comprobantesRoutes);
 app.use('/api/reportes', comprobantesRoutes);
 
-// 2. Servir el index.html desde la carpeta 'public'
+// Servir public/index.html para cualquier ruta del cliente
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
