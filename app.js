@@ -12,7 +12,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+
+// 1. Apuntar los archivos estáticos a la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/health', (req, res) => res.status(200).send('OK'));
 
@@ -42,8 +44,9 @@ app.use('/api/comprobantes', comprobantesRoutes);
 app.use('/api/cola', comprobantesRoutes);
 app.use('/api/reportes', comprobantesRoutes);
 
+// 2. Servir el index.html desde la carpeta 'public'
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 module.exports = app;
